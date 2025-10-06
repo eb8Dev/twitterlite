@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Twitter Lite</title>
+    <link rel="stylesheet" href="{% static 'posts/css/style.css' %}">
+</head>
+
+<body>
+    <h1>Twitter Lite 🐦</h1>
+
+    {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }} |
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="background: none; border: none; color: #1da1f2; cursor: pointer; padding: 0;">
+            Logout
+        </button>
+    </form>
+    </p>
+    <p><a href="{% url 'create_post' %}">+ New Post</a></p>
+    {% else %}
+    <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a></p>
+    {% endif %}
+
+    <hr>
+
+    {% for post in posts %}
+    <div>
+        <strong>@{{ post.user.username }}</strong> — {{ post.created_at|date:"SHORT_DATETIME_FORMAT" }}<br>
+        {{ post.content }}
+    </div>
+    <hr>
+    {% empty %}
+    <p>No posts yet.</p>
+    {% endfor %}
+</body>
+
+</html>

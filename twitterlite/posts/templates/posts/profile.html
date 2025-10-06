@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+
+<body>
+    <h2>@{{ profile_user.username }}'s Profile</h2>
+
+    <a href="{% url 'home' %}">← Back to Home</a>
+    <hr>
+
+    {% for post in posts %}
+    <div>
+        <p>{{ post.content }}</p>
+        <small>{{ post.created_at|date:"SHORT_DATETIME_FORMAT" }}</small>
+    </div>
+    <hr>
+    {% empty %}
+    <p>No posts yet.</p>
+    {% endfor %}
+
+</body>
+
+</html>

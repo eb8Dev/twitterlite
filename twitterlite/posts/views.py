@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 def home(request):
     posts = Post.objects.all().order_by('-created_at')
-    return render(request, 'posts/home.html', {'posts': posts})
+    return render(request, 'home.html', {'posts': posts})
 
 def register(request):
     if request.method == 'POST':
@@ -25,7 +25,7 @@ def register(request):
             messages.error(request, "Please correct the errors below.")
     else:
         form = RegisterForm()
-    return render(request, 'posts/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
 
 @login_required
 def create_post(request):
@@ -39,7 +39,7 @@ def create_post(request):
             return redirect('home')
     else:
         form = PostForm()
-    return render(request, 'posts/create_post.html', {'form': form})
+    return render(request, 'create_post.html', {'form': form})
 
 
     
@@ -57,4 +57,4 @@ def delete_post(request, post_id):
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(user=user).order_by('-created_at')
-    return render(request, 'posts/profile.html', {'profile_user': user, 'posts': posts})
+    return render(request, 'profile.html', {'profile_user': user, 'posts': posts})
